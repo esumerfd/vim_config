@@ -1,0 +1,8 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/Applications/MacVim.app/Contents/Resources/vim/runtime/colors'
+let g:netrw_dirhist_2='/Edward/Projects/vp3/lamp/conf/templates/vp3_verify_email_msc_en'
+let g:netrw_dirhist_3='/Edward/Projects/pos/subwaypos/DashboardSetup/DashboardSetup/SplunkForwarderConfig'
+let g:netrw_dirhist_4='/Edward/Projects/pos/orchestrator/trunk/puppet/modules/splunk_forwarder'
+let g:netrw_dirhist_5='/Edward/Projects/vp3/vp3test/toxic/10_lamp/65_email_verification/050_profile_credential_put_ip_get_nonip'
+let g:netrw_dirhist_6='/Users/esumerfield/Dropbox/Edward/home/bin'

@@ -1,0 +1,141 @@
+[submodule "bundle/Command-T"]
+	path = bundle/Command-T
+	url = git://github.com/akitaonrails/Command-T.git
+[submodule "bundle/git"]
+	path = bundle/git
+	url = git://github.com/tpope/vim-git.git
+[submodule "bundle/markdown"]
+	path = bundle/markdown
+	url = git://github.com/tpope/vim-markdown.git
+[submodule "bundle/pastie"]
+	path = bundle/pastie
+	url = git://github.com/tpope/vim-pastie.git
+[submodule "bundle/ragtag"]
+	path = bundle/ragtag
+	url = git://github.com/tpope/vim-ragtag.git
+[submodule "bundle/snipmate"]
+	path = bundle/snipmate
+	url = git://github.com/akitaonrails/snipmate.vim.git
+[submodule "bundle/surround"]
+	path = bundle/surround
+	url = git://github.com/tpope/vim-surround.git
+[submodule "bundle/syntastic"]
+	path = bundle/syntastic
+	url = git://github.com/scrooloose/syntastic.git
+[submodule "bundle/textile"]
+	path = bundle/textile
+	url = git://github.com/timcharper/textile.vim.git
+[submodule "bundle/unimpaired"]
+	path = bundle/unimpaired
+	url = git://github.com/tpope/vim-unimpaired.git
+[submodule "bundle/vim-ruby"]
+	path = bundle/vim-ruby
+	url = git://github.com/vim-ruby/vim-ruby.git
+[submodule "plugin/vifm.vim"]
+	path = plugin/vifm.vim
+	url = https://github.com/vifm/vifm.vim
+[submodule "snippets"]
+	path = snippets
+	url = git://github.com/akitaonrails/snipmate-snippets.git
+[submodule "bundle/ack"]
+	path = bundle/ack
+	url = git://github.com/mileszs/ack.vim.git
+[submodule "bundle/cucumber"]
+	path = bundle/cucumber
+	url = git://github.com/tpope/vim-cucumber.git
+[submodule "bundle/Dockerfile.vim"]
+	path = bundle/Dockerfile.vim
+	url = https://github.com/ekalinin/Dockerfile.vim
+[submodule "bundle/endwise"]
+	path = bundle/endwise
+	url = git://github.com/tpope/vim-endwise.git
+[submodule "bundle/fugitive"]
+	path = bundle/fugitive
+	url = git://github.com/tpope/vim-fugitive.git
+[submodule "bundle/gist.vim"]
+	path = bundle/gist.vim
+	url = https://github.com/keith/gist.vim
+[submodule "bundle/haml"]
+	path = bundle/haml
+	url = git://github.com/tpope/vim-haml.git
+[submodule "bundle/markdown-preview"]
+	path = bundle/markdown-preview
+	url = http://github.com/robgleeson/vim-markdown-preview.git
+[submodule "bundle/NERD_commenter"]
+	path = bundle/NERD_commenter
+	url = git://github.com/scrooloose/nerdcommenter.git
+[submodule "bundle/NERD_tree"]
+	path = bundle/NERD_tree
+	url = git://github.com/scrooloose/nerdtree.git
+[submodule "bundle/paredit.vim"]
+	path = bundle/paredit.vim
+	url = https://github.com/vim-scripts/paredit.vim
+[submodule "bundle/rails"]
+	path = bundle/rails
+	url = git://github.com/tpope/vim-rails.git
+[submodule "bundle/scss-syntax"]
+	path = bundle/scss-syntax
+	url = http://github.com/cakebaker/scss-syntax.vim.git
+[submodule "bundle/supertab"]
+	path = bundle/supertab
+	url = git://github.com/ervandew/supertab.git
+[submodule "bundle/tabular"]
+	path = bundle/tabular
+	url = http://github.com/godlygeek/tabular.git
+[submodule "bundle/typescript-vim"]
+	path = bundle/typescript-vim
+	url = https://github.com/leafgarland/typescript-vim.git
+[submodule "bundle/vim-ansible-yaml"]
+	path = bundle/vim-ansible-yaml
+	url = https://github.com/chase/vim-ansible-yaml
+[submodule "bundle/vim-classpath"]
+	path = bundle/vim-classpath
+	url = git://github.com/tpope/vim-classpath.git
+[submodule "bundle/vim-clojure-static"]
+	path = bundle/vim-clojure-static
+	url = git://github.com/guns/vim-clojure-static.git
+[submodule "bundle/vim-coffee-script"]
+	path = bundle/vim-coffee-script
+	url = git://github.com/kchmck/vim-coffee-script.git
+[submodule "bundle/vim-elixir"]
+	path = bundle/vim-elixir
+	url = https://github.com/elixir-lang/vim-elixir.git
+[submodule "bundle/vim-fireplace"]
+	path = bundle/vim-fireplace
+	url = git://github.com/tpope/vim-fireplace.git
+[submodule "bundle/vim-geeknote"]
+	path = bundle/vim-geeknote
+	url = https://github.com/neilagabriel/vim-geeknote
+[submodule "bundle/vim-GitHubDashBoard"]
+	path = bundle/vim-GitHubDashBoard
+	url = https://github.com/lukaszkorecki/vim-GitHubDashBoard
+[submodule "bundle/vim-go"]
+	path = bundle/vim-go
+	url = https://github.com/fatih/vim-go.git
+[submodule "bundle/vim-hocon"]
+	path = bundle/vim-hocon
+	url = https://github.com/GEverding/vim-hocon
+[submodule "bundle/vim-multiple-cursors"]
+	path = bundle/vim-multiple-cursors
+	url = https://github.com/terryma/vim-multiple-cursors
+[submodule "bundle/vim-ps1"]
+	path = bundle/vim-ps1
+	url = https://github.com/PProvost/vim-ps1.git
+[submodule "bundle/vim-puppet"]
+	path = bundle/vim-puppet
+	url = https://github.com/rodjek/vim-puppet.git
+[submodule "bundle/vim-rbenv"]
+	path = bundle/vim-rbenv
+	url = git://github.com/tpope/vim-rbenv.git
+[submodule "bundle/vim-ruby-sinatra"]
+	path = bundle/vim-ruby-sinatra
+	url = git://github.com/hallison/vim-ruby-sinatra.git
+[submodule "bundle/vim-scala"]
+	path = bundle/vim-scala
+	url = https://github.com/derekwyatt/vim-scala
+[submodule "bundle/vim-terraform"]
+	path = bundle/vim-terraform
+	url = https://github.com/hashivim/vim-terraform.git
+[submodule "bundle/vividchalk"]
+	path = bundle/vividchalk
+	url = git://github.com/tpope/vim-vividchalk.git
