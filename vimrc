@@ -43,8 +43,8 @@ set ignorecase
 set smartcase
 
 " Tags and TList setup
-let tlist_ant_settings = 'ant;p:project;t:target'
-let tlist_groovy_settings = 'groovy;p:package;c:class;i:interface;f:function;v:variables'
+"let tlist_ant_settings = 'ant;p:project;t:target'
+"let tlist_groovy_settings = 'groovy;p:package;c:class;i:interface;f:function;v:variables'
 
 " Open word under cursor in new tab ApiDecoration
 " Open file in current window
@@ -69,10 +69,6 @@ let g:yankring_replace_n_pkey = '<C-P>'
 let g:yankring_replace_n_nkey = '<C-n>'
 nnoremap <silent> ,yr :YRGetElem<CR>
 nnoremap <silent> ,ys :YRSearch<CR>
-
-" Xiki
-"let $XIKI_DIR = "/Edward/Personal/Projects/xiki"
-"source /Edward/Personal/Projects/xiki/etc/vim/xiki.vim
 
 " Version Control
 let VCSCommandSVNDiffExt = "vimdiff"
@@ -582,7 +578,7 @@ nmap <S-Tab> gT
 
 let ScreenShot = {'Icon':0, 'Credits':0, 'force_background':'#FFFFFF'} 
 
-let g:fuf_file_exclude = '^target|^gen|\v\~$|\.o$|\.exe$|\.bak$|\.swp|\.class$'
+let g:fuf_file_exclude = '^target|^gen|\v\~$|\.o$|\.exe$|\.bak$|\.swp|\.class$|\.beam$'
 
 map <C-w><C-[> :tabmove -1<CR>
 map <C-w><C-]> :tabmove +1<CR>
