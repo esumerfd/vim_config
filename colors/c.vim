@@ -1,4 +1,4 @@
-" Vim Syntax Highlighting File
+"set runtimepath^=~/.vim/bundle/ctrlp.vim Vim Syntax Highlighting File
 " 
 " Language: C
 "

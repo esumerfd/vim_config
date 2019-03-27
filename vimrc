@@ -21,10 +21,6 @@ call pathogen#helptags()
 " http://stackoverflow.com/questions/16902317/vim-slow-with-ruby-syntax-highlighting
 "set re=1
 
-" Save
-map <C-s> :wa<kEnter>
-imap <C-s> <Esc>:wa<kEnter>i
-
 " Window management
 map <silent> <C-w>t <Esc>:tabe<CR>
 
@@ -55,12 +51,31 @@ nnoremap <silent> ,o\ :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 nnoremap <silent> ,o} :split<CR>:exec("tag ".expand("<cword>"))<CR>
 " Open file on left
 nnoremap <silent> ,o] :vsplit<CR>:exec("tag ".expand("<cword>"))<CR>
-" open test fie on left
+" open test file on left
 nnoremap <silent> ,ot :vsplit<CR>:exec("tag ".expand("<cword>")."Test")<CR>
 " Open next file in NerdTree below
 nnoremap <silent> ,on :split<CR><C-W>j:call FindInNERDTree()<CR>o<CR>
 
-map <silent> ,tt <Esc>:TlistToggle<CR>
+"map <silent> ,tt <Esc>:TlistToggle<CR>
+nnoremap <silent> ,t     :tabe<CR>
+
+nnoremap <silent> ,< 20<C-W><
+nnoremap <silent> ,> 20<C-W>>
+
+" Enter the double curlys for pickle"
+nnoremap <silent> ,{ i{{  }}<ESC>hhhi
+
+nnoremap <silent> ,d yw:vsplit ../stackdb/db/ctdb/baseline_4.16.10/create_schema.sql<CR>/<c-r>"<CR>
+
+command! -nargs=1 EditFile :e `find . -type f -iname <args>`
+
+let mapleader=','
+if exists(":Tabularize")
+  nmap <Leader>a= :Tabularize /=<CR>
+  vmap <Leader>a= :Tabularize /=<CR>
+  nmap <Leader>a: :Tabularize /:\zs<CR>
+  vmap <Leader>a: :Tabularize /:\zs<CR>
+endif
 
 "map <silent> 'ctf <Esc>:%s/@Test/\/\/@Test/<CR>
 "map <silent> 'ctn <Esc>:%s/\/\/@Test/@Test/<CR>
@@ -75,24 +90,49 @@ let VCSCommandSVNDiffExt = "vimdiff"
 nnoremap <silent> ,vs     :VCSStatus<CR>
 nnoremap <silent> ,vd     :VCSDiff<CR>
 
+" Do not termimate files with new lines"
+set noeol
+
 " Custom Fie Types"
 au BufRead,BufNewFile *.repo set filetype=dosini
+
+" Vims wild ignore property
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/_build/*,*/gen/*
+
+" Ctrl-P
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\.git$\|\.hg$\|\.svn$\|\.yardoc$\|gen$|_build$',
+  \ 'file': '\.dll$|\.exe$\|\.so$\|\.dat$'
+  \ }
+
+let g:ctrlp_map = ',p'
+let g:ctrlp_cmd = 'CtrlP'
+
+" 'c' - the directory of the current file.
+" 'a' - the directory of the current file, unless it is a subdirectory of the cwd
+" 'r' - the nearest ancestor of the current file that contains one of these directories or files: .git .hg .svn .bzr _darcs
+" 'w' - modifier to "r": start search from the cwd instead of the current file's directory
+" "0 or '' (empty string) - disable this feature.
+let g:ctrlp_working_path_mode = 'ra'"
+
+"nnoremap <silent> ,p     :CtrlP<CR>
 
 " Fuzzy Finder
 "
 " let g:fuf_modesDisable = []
 " let g:fuf_mrufile_maxItem = 1000
 " let g:fuf_mrucmd_maxItem = 400
-let g:fuf_mrufile_exclude = '\v\~$|.*\.class$|.*/gen/.*$|.*\.(bak|sw[po])$|^(\/\/|\\\\|\/mnt\/)'
-let g:fuf_file_exclude = '\v\~$|\.(class|o|exe|dll|bak|orig|swp)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
-let g:fuf_dir_exclude = '^gen'
-let g:max_menu_width = 100
+"let g:fuf_mrufile_exclude = '\v\~$|.*\.class$|.*/gen/.*$|.*\.(bak|sw[po])$|^(\/\/|\\\\|\/mnt\/)'
+"let g:fuf_file_exclude = '\v\~$|\.(class|o|exe|dll|bak|orig|swp)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
+"let g:fuf_dir_exclude = '^gen'
+"let g:max_menu_width = 100
 
-nnoremap <silent> ,fb     :FufBuffer<CR>
-nnoremap <silent> ,fc     :FufCoverageFile<CR>
-nnoremap <silent> ,fF     :FufFile<CR>
-nnoremap <silent> ,ff     :FufFileWithCurrentBufferDir<CR>
-nnoremap <silent> ,fd     :FufDir<CR>
+"nnoremap <silent> ,fb     :FufBuffer<CR>
+"nnoremap <silent> ,fc     :FufCoverageFile<CR>
+"nnoremap <silent> ,fF     :FufFile<CR>
+"nnoremap <silent> ,ff     :FufFileWithCurrentBufferDir<CR>
+"nnoremap <silent> ,fd     :FufDir<CR>
 " nnoremap <silent> <C-f><C-p> :FufFileWithFullCwd<CR>
 " nnoremap <silent> <C-f><C-d> :FufDirWithCurrentBufferDir<CR>
 " nnoremap <silent> <C-f>d     :FufDirWithFullCwd<CR>
@@ -119,6 +159,7 @@ set pastetoggle=<F2>
 " Simplify indentation in YML files by stopping auto indent.
 filetype plugin indent on
 autocmd FileType yaml setl indentkeys-=<:->
+autocmd FileType cs setlocal shiftwidth=4 tabstop=4
 
 " Improve paragraphing movement by ignoring blanks on the lines.
 function! ParagraphMove(delta, visual, count)
@@ -200,8 +241,7 @@ set number      "add line numbers
 set showbreak=...
 set wrap linebreak nolist
 
-"mapping for command key to map navigation thru display lines instead
-"of just numbered lines
+"mapping for command key to map navigation thru display lines instead of just numbered lines
 vmap <D-j> gj
 vmap <D-k> gk
 vmap <D-4> g$
@@ -485,7 +525,7 @@ nnoremap <C-L> :nohls<CR><C-L>
 inoremap <C-L> <C-O>:nohls<CR>
 
 "map to bufexplorer
-nnoremap <leader>b :BufExplorer<cr>
+nnoremap <leader>be :BufExplorer<cr>
 
 "map to CommandT TextMate style finder
 nnoremap <leader>t :CommandT<CR>
@@ -516,20 +556,12 @@ try
 catch
   source ~/vimfiles/snippets/support_functions.vim
 endtry
-autocmd vimenter * call s:SetupSnippets()
-function! s:SetupSnippets()
-
-    "if we're in a rails env then read in the rails snippets
-    if filereadable("./config/environment.rb")
-        call ExtractSnips("~/.vim/snippets/ruby-rails", "ruby")
-        call ExtractSnips("~/.vim/snippets/eruby-rails", "eruby")
-    endif
-
-    call ExtractSnips("~/.vim/snippets/html", "eruby")
-    call ExtractSnips("~/.vim/snippets/html", "xhtml")
-
-    call ExtractSnips("~/.vim/snippets/html", "php")
-endfunction
+"autocmd vimenter * call s:SetupSnippets()
+"function! s:SetupSnippets()
+    "call ExtractSnips("~/.vim/snippets/html", "eruby")
+    "call ExtractSnips("~/.vim/snippets/html", "xhtml")
+    "call ExtractSnips("~/.vim/snippets/html", "php")
+"endfunction
 
 "visual search mappings
 function! s:VSetSearch()
