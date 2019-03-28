@@ -97,7 +97,7 @@ set noeol
 au BufRead,BufNewFile *.repo set filetype=dosini
 
 " Vims wild ignore property
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/_build/*,*/gen/*
+set wildignore+=/gen/*,*/tmp/*,*.so,*.swp,*.zip,*/_build/*
 
 " Ctrl-P
 set runtimepath^=~/.vim/bundle/ctrlp.vim
