@@ -54,7 +54,7 @@ nnoremap <silent> ,o] :vsplit<CR>:exec("tag ".expand("<cword>"))<CR>
 " open test file on left
 nnoremap <silent> ,ot :vsplit<CR>:exec("tag ".expand("<cword>")."Test")<CR>
 " Open next file in NerdTree below
-nnoremap <silent> ,on :split<CR><C-W>j:call FindInNERDTree()<CR>o<CR>
+nnoremap <silent> ,on :split<CR><C-W>j:NERDTreeFind<CR>o<CR>
 
 "map <silent> ,tt <Esc>:TlistToggle<CR>
 nnoremap <silent> ,t     :tabe<CR>
@@ -474,8 +474,8 @@ set hidden
 " else in your ~/.vimrc file, such as:
 " nmap <silent> <Leader>q <Plug>PeepOpen
 
-silent! nmap <silent> <Leader>p :NERDTreeToggle<CR>
-nnoremap <silent> <C-f> :call FindInNERDTree()<CR> 
+"silent! nmap <silent> <Leader>p :NERDTreeToggle<CR>
+nnoremap <silent> <C-f> :NERDTreeFind<CR> 
 
 "vifm"
 "make <c-l> clear the highlight as well as redraw
