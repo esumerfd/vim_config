@@ -63,9 +63,9 @@ nnoremap <silent> ,< 20<C-W><
 nnoremap <silent> ,> 20<C-W>>
 
 " Enter the double curlys for pickle"
-nnoremap <silent> ,{ i{{  }}<ESC>hhhi
+nnoremap <silent> ,{ i{{  }}<ESC>hhi
 
-nnoremap <silent> ,d yw:vsplit ../stackdb/db/ctdb/baseline_4.16.10/create_schema.sql<CR>/<c-r>"<CR>
+nnoremap <silent> ,d yw:vsplit ../stackdb/db/ctdb/baseline_10.0.120/create_schema.sql<CR>/<c-r>"<CR>
 
 command! -nargs=1 EditFile :e `find . -type f -iname <args>`
 
@@ -95,9 +95,6 @@ set noeol
 
 " Custom Fie Types"
 au BufRead,BufNewFile *.repo set filetype=dosini
-
-" Vims wild ignore property
-set wildignore+=/gen/*,*/tmp/*,*.so,*.swp,*.zip,*/_build/*
 
 " Ctrl-P
 set runtimepath^=~/.vim/bundle/ctrlp.vim
@@ -444,6 +441,9 @@ set wildmode=list:longest   "make cmdline tab completion similar to bash
 set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
 set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
 
+" Ignore folders in ctrl-p
+set wildignore+=*/gen/*,*/tmp/*,*.so,*.swp,*.zip,*/_build/*
+
 "display tabs and trailing spaces
 "set list
 "set listchars=tab:\ \ ,extends:>,precedes:<
@@ -470,48 +470,6 @@ set ttymouse=xterm2
 "hide buffers when not displayed
 set hidden
 
-"Command-T configuration
-let g:CommandTMaxHeight=10
-let g:CommandTMatchWindowAtTop=1
-
-if has("gui_running") && has("gui")
-    "tell the term has 256 colors
-    set t_Co=256
-
-    colorscheme railscasts
-    set guitablabel=%M%t
-    set lines=40
-    set columns=115
-
-    if has("gui_gnome")
-        set term=gnome-256color
-        colorscheme ir_dark
-        set guifont=Inconsolata\ Medium\ 12
-    endif
-
-    if has("gui_mac") || has("gui_macvim")
-        set guifont=Menlo:h14
-        " key binding for Command-T to behave properly
-        " uncomment to replace the Mac Command-T key to Command-T plugin
-        "macmenu &File.New\ Tab key=<nop>
-        "map <D-t> :CommandT<CR>
-        " make Mac's Option key behave as the Meta key
-        set invmmta
-        try
-          set transparency=5
-        catch
-        endtry
-    endif
-
-    if has("gui_win32") || has("gui_win32s")
-        set guifont=Consolas:h12
-        set enc=utf-8
-    endif
-else
-    "dont load csapprox if there is no gui support - silences an annoying warning
-    let g:CSApprox_loaded = 1
-endif
-
 " PeepOpen uses <Leader>p as well so you will need to redefine it so something
 " else in your ~/.vimrc file, such as:
 " nmap <silent> <Leader>q <Plug>PeepOpen
@@ -526,9 +484,6 @@ inoremap <C-L> <C-O>:nohls<CR>
 
 "map to bufexplorer
 nnoremap <leader>be :BufExplorer<cr>
-
-"map to CommandT TextMate style finder
-nnoremap <leader>t :CommandT<CR>
 
 "map Q to something useful
 noremap Q gq
