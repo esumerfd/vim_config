@@ -67,6 +67,8 @@ nnoremap <silent> ,{ i{{  }}<ESC>hhi
 
 nnoremap <silent> ,d yw:vsplit ../stackdb/db/ctdb/baseline_10.0.120/create_schema.sql<CR>/<c-r>"<CR>
 
+nnoremap <silent> ,u 0cwusing<ESC>A;<ESC>0j
+
 command! -nargs=1 EditFile :e `find . -type f -iname <args>`
 
 let mapleader=','
@@ -112,6 +114,9 @@ let g:ctrlp_cmd = 'CtrlP'
 " 'w' - modifier to "r": start search from the cwd instead of the current file's directory
 " "0 or '' (empty string) - disable this feature.
 let g:ctrlp_working_path_mode = 'ra'"
+
+" GIT Gutter: https://github.com/airblade/vim-gitgutter
+let g:gitgutter_enabled=1
 
 "nnoremap <silent> ,p     :CtrlP<CR>
 
@@ -474,8 +479,8 @@ set hidden
 " else in your ~/.vimrc file, such as:
 " nmap <silent> <Leader>q <Plug>PeepOpen
 
-"silent! nmap <silent> <Leader>p :NERDTreeToggle<CR>
-nnoremap <silent> <C-f> :NERDTreeFind<CR> 
+nnoremap <silent> ƒ :NERDTreeFind<CR> 
+nnoremap <silent> <C-f> :NERDTreeToggle<CR> 
 
 "vifm"
 "make <c-l> clear the highlight as well as redraw
