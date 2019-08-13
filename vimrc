@@ -69,7 +69,7 @@ nnoremap <silent> ,d yw:vsplit ../stackdb/db/ctdb/baseline_10.0.120/create_schem
 
 nnoremap <silent> ,u 0cwusing<ESC>A;<ESC>0j
 
-command! -nargs=1 EditFile :e `find . -type f -iname <args>`
+command! -nargs=1 File :e `find . -type f -iname <args>`
 
 let mapleader=','
 if exists(":Tabularize")
@@ -100,13 +100,13 @@ au BufRead,BufNewFile *.repo set filetype=dosini
 
 " Ctrl-P
 set runtimepath^=~/.vim/bundle/ctrlp.vim
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\.git$\|\.hg$\|\.svn$\|\.yardoc$\|gen$|_build$',
-  \ 'file': '\.dll$|\.exe$\|\.so$\|\.dat$'
-  \ }
-
 let g:ctrlp_map = ',p'
 let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_switch_buffer = 'et'
+"let g:ctrlp_custom_ignore = {
+  "\ 'dir':  '\.git$\|\.hg$\|\.svn$\|\.yardoc$\|gen$|_build$',
+  "\ 'file': '\.dll$|\.exe$\|\.so$\|\.dat$'
+  "\ }
 
 " 'c' - the directory of the current file.
 " 'a' - the directory of the current file, unless it is a subdirectory of the cwd
@@ -115,8 +115,14 @@ let g:ctrlp_cmd = 'CtrlP'
 " "0 or '' (empty string) - disable this feature.
 let g:ctrlp_working_path_mode = 'ra'"
 
+" Ignore files in gitignore."
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+
 " GIT Gutter: https://github.com/airblade/vim-gitgutter
 let g:gitgutter_enabled=1
+
+nmap gh[ <Plug>GitGutterPrevHunk
+nmap gh] <Plug>GitGutterNextHunk
 
 "nnoremap <silent> ,p     :CtrlP<CR>
 
@@ -442,12 +448,28 @@ set foldmethod=indent   "fold based on indent
 set foldnestmax=3       "deepest fold is 3 levels
 set nofoldenable        "dont fold by default
 
+nnoremap <silent> <leader>zj :call NextClosedFold('j')<cr>
+nnoremap <silent> <leader>zk :call NextClosedFold('k')<cr>
+function! NextClosedFold(dir)
+    let cmd = 'norm!z' . a:dir
+    let view = winsaveview()
+    let [l0, l, open] = [0, view.lnum, 1]
+    while l != l0 && open
+        exe cmd
+        let [l0, l] = [l, line('.')]
+        let open = foldclosed(l) < 0
+    endwhile
+    if open
+        call winrestview(view)
+    endif
+endfunction
+
 set wildmode=list:longest   "make cmdline tab completion similar to bash
 set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
 set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
 
 " Ignore folders in ctrl-p
-set wildignore+=*/gen/*,*/tmp/*,*.so,*.swp,*.zip,*/_build/*
+set wildignore+=*/gen/*,*/tmp/*,*.so,*.swp,*.zip,*/_build/*,.git/*,*.dll,*.exe,*.dat
 
 "display tabs and trailing spaces
 "set list
@@ -475,9 +497,11 @@ set ttymouse=xterm2
 "hide buffers when not displayed
 set hidden
 
-" PeepOpen uses <Leader>p as well so you will need to redefine it so something
-" else in your ~/.vimrc file, such as:
-" nmap <silent> <Leader>q <Plug>PeepOpen
+"NERDTREE setup
+
+let NERDTreeAutoDeleteBuffer = 1
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
 
 nnoremap <silent> ƒ :NERDTreeFind<CR> 
 nnoremap <silent> <C-f> :NERDTreeToggle<CR> 
