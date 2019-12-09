@@ -38,6 +38,9 @@ nnoremap <F1> :noh<CR><CR>
 set ignorecase
 set smartcase
 
+" Fold on search results
+nnoremap \z :setlocal foldexpr=(getline(v:lnum)=~@/)?0:(getline(v:lnum-1)=~@/)\\|\\|(getline(v:lnum+1)=~@/)?1:2 foldmethod=expr foldlevel=0 foldcolumn=2<CR>
+
 " Tags and TList setup
 "let tlist_ant_settings = 'ant;p:project;t:target'
 "let tlist_groovy_settings = 'groovy;p:package;c:class;i:interface;f:function;v:variables'
@@ -50,7 +53,9 @@ nnoremap <silent> ,o\ :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 " Open file above
 nnoremap <silent> ,o} :split<CR>:exec("tag ".expand("<cword>"))<CR>
 " Open file on left
-nnoremap <silent> ,o] :vsplit<CR>:exec("tag ".expand("<cword>"))<CR>
+nnoremap <silent> ,o[ :vsplit<CR>:exec("tag ".expand("<cword>"))<CR>
+" Open file on right
+nnoremap <silent> ,o] :vsplit<CR>^wl:exec("tag ".expand("<cword>"))<CR>
 " open test file on left
 nnoremap <silent> ,ot :vsplit<CR>:exec("tag ".expand("<cword>")."Test")<CR>
 " Open next file in NerdTree below
@@ -67,9 +72,27 @@ nnoremap <silent> ,{ i{{  }}<ESC>hhi
 
 nnoremap <silent> ,d yw:vsplit ../stackdb/db/ctdb/baseline_10.0.120/create_schema.sql<CR>/<c-r>"<CR>
 
-nnoremap <silent> ,u 0cwusing<ESC>A;<ESC>0j
-
 command! -nargs=1 File :e `find . -type f -iname <args>`
+command! CopyPath let @+ = expand('%:p')
+
+" sidways move arguments in method calls
+nnoremap <silent> ,ah :SidewaysLeft<cr>
+nnoremap <silent> ,al :SidewaysRight<cr>
+
+" move lines and selections"
+" Bind alt-j and alt-k to move up and down
+nnoremap ∆ :m .+1<CR>==
+nnoremap ˚ :m .-2<CR>==
+inoremap ∆ <Esc>:m .+1<CR>==gi
+inoremap ˚ <Esc>:m .-2<CR>==gi
+vnoremap ∆ :m '>+1<CR>gv=gv
+vnoremap ˚ :m '<-2<CR>gv=gv
+
+" Formatting buffers"
+nnoremap <silent> ,fj :%!jq '.'<cr>:set ft=json<cr>
+nnoremap <silent> ,fh :%!xxd<cr>
+nnoremap <silent> ,fu 0cwusing<ESC>A;<ESC>0j
+vnoremap <silent> ,ft Tabularize /,\zs<cr>
 
 let mapleader=','
 if exists(":Tabularize")
@@ -121,8 +144,9 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standar
 " GIT Gutter: https://github.com/airblade/vim-gitgutter
 let g:gitgutter_enabled=1
 
-nmap gh[ <Plug>GitGutterPrevHunk
-nmap gh] <Plug>GitGutterNextHunk
+nmap ghk <Plug>GitGutterPrevHunk
+nmap ghj <Plug>GitGutterNextHunk
+nnoremap <silent> ,gb     :GitBlame<CR>
 
 "nnoremap <silent> ,p     :CtrlP<CR>
 
@@ -598,4 +622,5 @@ let g:fuf_file_exclude = '^target|^gen|\v\~$|\.o$|\.exe$|\.bak$|\.swp|\.class$|\
 
 map <C-w><C-[> :tabmove -1<CR>
 map <C-w><C-]> :tabmove +1<CR>
+
 
