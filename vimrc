@@ -1,6 +1,25 @@
 "########################
 " Local changes to vimrc
 "########################
+" Help
+"- set shiftwidth=4
+"- /\%Vwhat_to_search
+"- 0- 92.
+"- g, and g; last cursor point
+"- c-o       last cursor point
+"- \c for caseless search
+"- ma and ‘ a - bookmark
+"- “_d yank/delete to null register
+"- Tabular /-
+"- :set binary || :set noeol
+"- :^r” to yank in mini win
+"- Ngt - goto tab
+"- :%!jq ‘.’ - format son
+"- ctrl-p try ^f or ^d or ^r
+"- set scrollbind! to lock window scrolling
+"- ^wT move window to new tab
+"- :CopyPath
+"
 "########################
 " How to debug:
 " :profile start profile.log
@@ -20,9 +39,6 @@ call pathogen#helptags()
 " Ruby syntax slow
 " http://stackoverflow.com/questions/16902317/vim-slow-with-ruby-syntax-highlighting
 "set re=1
-
-" Window management
-map <silent> <C-w>t <Esc>:tabe<CR>
 
 " Clipboard
 set clipboard+=unnamed
@@ -45,6 +61,8 @@ nnoremap \z :setlocal foldexpr=(getline(v:lnum)=~@/)?0:(getline(v:lnum-1)=~@/)\\
 "let tlist_ant_settings = 'ant;p:project;t:target'
 "let tlist_groovy_settings = 'groovy;p:package;c:class;i:interface;f:function;v:variables'
 
+let mapleader=','
+
 " Open word under cursor in new tab ApiDecoration
 " Open file in current window
 nnoremap <silent> ,oo :exec("tag ".expand("<cword>"))<CR>
@@ -62,6 +80,7 @@ nnoremap <silent> ,ot :vsplit<CR>:exec("tag ".expand("<cword>")."Test")<CR>
 nnoremap <silent> ,on :split<CR><C-W>j:NERDTreeFind<CR>o<CR>
 
 "map <silent> ,tt <Esc>:TlistToggle<CR>
+map <silent> <C-w>t <Esc>:tabe<CR>
 nnoremap <silent> ,t     :tabe<CR>
 
 nnoremap <silent> ,< 20<C-W><
@@ -91,15 +110,16 @@ vnoremap ˚ :m '<-2<CR>gv=gv
 " Formatting buffers"
 nnoremap <silent> ,fj :%!jq '.'<cr>:set ft=json<cr>
 nnoremap <silent> ,fh :%!xxd<cr>
-nnoremap <silent> ,fu 0cwusing<ESC>A;<ESC>0j
-vnoremap <silent> ,ft Tabularize /,\zs<cr>
+nnoremap <silent> ,fu 0cwusing<ESC>A;<ESC>0
 
-let mapleader=','
 if exists(":Tabularize")
-  nmap <Leader>a= :Tabularize /=<CR>
-  vmap <Leader>a= :Tabularize /=<CR>
-  nmap <Leader>a: :Tabularize /:\zs<CR>
-  vmap <Leader>a: :Tabularize /:\zs<CR>
+  "nmap <Leader>a= :Tabularize /=<CR>
+  "vmap <Leader>a= :Tabularize /=<CR>
+  "nmap <Leader>a: :Tabularize /:\zs<CR>
+  "vmap <Leader>a: :Tabularize /:\zs<CR>
+  vnoremap <silent> ,ft, Tabularize /,\zs<cr>
+  vnoremap <silent> ,ft= Tabularize /=\zs<cr>
+  vnoremap <silent> ,ft: Tabularize /:\zs<cr>
 endif
 
 "map <silent> 'ctf <Esc>:%s/@Test/\/\/@Test/<CR>
@@ -623,4 +643,31 @@ let g:fuf_file_exclude = '^target|^gen|\v\~$|\.o$|\.exe$|\.bak$|\.swp|\.class$|\
 map <C-w><C-[> :tabmove -1<CR>
 map <C-w><C-]> :tabmove +1<CR>
 
-
+function! DoPrettyXML()
+  " save the filetype so we can restore it later
+  let l:origft = &ft
+  set ft=
+  " delete the xml header if it exists. This will
+  " permit us to surround the document with fake tags
+  " without creating invalid xml.
+  1s/<?xml .*?>//e
+  " insert fake tags around the entire document.
+  " This will permit us to pretty-format excerpts of
+  " XML that may contain multiple top-level elements.
+  0put ='<PrettyXML>'
+  $put ='</PrettyXML>'
+  silent %!xmllint --format -
+  " xmllint will insert an <?xml?> header. it's easy enough to delete
+  " if you don't want it.
+  " delete the fake tags
+  2d
+  $d
+  " restore the 'normal' indentation, which is one extra level
+  " too deep due to the extra tags we wrapped around the document.
+  silent %<
+  " back to home
+  1
+  " restore the filetype
+  exe "set ft=" . l:origft
+endfunction
+command! PrettyXML call DoPrettyXML()

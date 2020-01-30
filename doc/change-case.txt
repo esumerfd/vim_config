@@ -1,0 +1,176 @@
+*change-case.txt*
+        Modify Case of Text Objects~
+                                                                 *change-case*
+
+This plugin adds a new operator that allows to change the case of text. Unlike
+the builtin |gu| and |gU| operators |change-case| will take the text it should
+operate on, split it into tokens and perform the case manipulation on each
+token (e.g. snake_case to camelCase).
+
+The plugin comes with the following case modifiers:
+
+  * camelCase
+  * PascalCase
+  * snake_case
+  * kebab-case
+  * UPPER CASE
+  * lower case
+  * Title Case (see |change-case-title-case| for details)
+
+If none of the builtin types meets your needs you can create your own modifier
+and seamlessly integrate it (see |change-case-custom-modifiers|).
+
+==============================================================================
+                                                           *change-case-usage*
+                                                            *<Plug>ChangeCase*
+                                                                   *cC* *cCC* *cCc*
+1. Using Change Case
+
+By default you can call the operation with |cC| in normal and |C| in visual mode. Hit
+|cC| and provide a motion or text object. You then will see a list of
+available modifiers at the bottom of the screen like:
+>
+    c:camelCase s:snake_case t:Title Case
+
+Hit the key before the ":" character to choose a case modifier and the case
+will change. Hit <Esc> to cancel.
+
+Like other Vim operations |cCc| and |cCC| will perform the modification on the
+whole line and the part of the line after the cursor respectively.
+
+You can change the default mappings by adding following lines to your vimrc:
+>
+   nmap <Leader>C <Plug>ChangeCase
+   nmap <Leader>Cc <Leader>C_
+   nmap <Leader>CC <Leader>C$
+   xmap <Leader>C <Plug>ChangeCase
+<
+                                                     *change-case-join-tokens*
+1.1 Join with Arbitrary Character
+
+If you hit a key that is not a letter or digit and not a defined modifier key
+the operation will separate the tokens with the pressed key. >
+
+  someVarName
+
+will be changed to >
+
+  some/Var/Name
+
+if you use slash as a case modifier (unless you have added a new modifier
+identified by the "/" key).
+
+==============================================================================
+
+2. Noteworthy Modifiers
+
+While most of the default modifiers work as expected, some of them require an
+explanation.
+
+                                          *g:changecase_lowercase_title_words*
+                                                      *change-case-title-case*
+2.1 Title Case
+
+Title case does not have one clear definition and its rules may change
+from language to language (or even within the same language).
+
+The default implementation capitalizes (first letter upper case, rest lower
+case) every token unless it is present in the |list|
+|g:changecase_lowercase_title_words|, then it will be transformed to all lower
+case. By default that list contains English articles and prepositions that are
+less than five charcters long. Change this variable's content if you do not
+like the default behavior.
+The very first letter of the text will be changed to upper case in anycase. 
+>
+  1) an overview of the idiosyncrasies of the english language
+
+will be changed to
+>
+  1) An Overview of the Idiosyncrasies of the English Language
+<
+Notice how the word "An" was capitalized even though it was the second token
+on the line.
+                                                     *g:changecase_guess_case*
+                                                      *change-case-snake-case*
+                                                      *change-case-kebab-case*
+2.2 Snake and Kebab Case
+
+These two modifiers will try to figure out whether the result should be all
+upper or lower case. If any of the tokens contain two or more consecutive
+upper case letters, the result will be upper case otherwise lower case.
+
+E.g.: The following word will be split into a list of three tokens: >
+  XMLHttpRequest -> ['XML', 'Http', 'Request']
+
+Since the token 'XML' contains two consecutive capital letters, the
+resulting snake case form will be all upper case: >
+  XML_HTTP_REQUEST
+
+You can either use the modifiers "_" and "-" to transform to snake and kebab
+case while keeping the actual letter cases or turn this behaviour off
+completely: >
+  let g:changecase_guess_case=0
+
+==============================================================================
+                                                  *change-case-custom-modifiers*
+                                                       *g:changecase_tokenizers*
+3. Adding Custom Modifiers
+
+If the case modifiers that are shipped by default do not satisfy your needs,
+you can specify your own. To do so you are required to provide two functions:
+
+  1. Tokenizer
+     The tokenizer function takes the text that is being modified and splits
+     it into separate tokens. This function takes a single string as an
+     argument - the text that is to be modified. If the user operates on more
+     than one line, the tokenizer is called for each line separately.
+>
+     function TokenizeSlashes(str)
+        return split(a:str, '/')
+     endfunction
+<
+     
+     You may also use one of the default tokenizers:
+
+     * g:changecase_tokenizers.word_boundaries: Splits text into all its
+       words, punctation characters and whitespace. Everything is preserved. >
+       'Everything is preserved.' ->
+       ['Everything', ' ', 'is', ' ', 'preserved', '.']
+
+       'fun! SomeFunction(arg1, arg2)' ->
+       ['fun', '! ', 'SomeFunction', '(', 'arg1', ', ', 'arg2', ')']
+<
+
+     * g:changecase_tokenizers.compounds: Splits compound words into their
+       components, non alpha-numerical characters are discarded. Leading
+       and trailing whitespace is preserved as part of the first/last token. >
+        '   fooBar' -> ['   foo', 'Bar']
+        'some_snake_case_word' -> ['some', 'snake', 'case', 'word']
+        '/path/to/a/file' -> ['path', 'to', 'a', 'file']
+        'normal text with spaces' -> ['normal', 'text', 'with', 'spaces']
+<
+  2. Modifier
+     The modifier function takes the tokens list returned by the tokenizer,
+     performs the case modification on each token and returns the resulting
+     string by joining the list. This string will then be used to replace the
+     affected text in the buffer.
+>
+     function ReverseCase(tokens)
+         let reversedTokens = reverse(copy(a:tokens))
+         return join(reversedTokens, '')
+     endfunction
+<
+                                                        *g:changecase_modifiers*
+Then you declare your new case modifier by adding it to the modifiers object: 
+>
+  let g:changecase_modifiers.r = {
+   \ 'name': 'reverse case',
+   \ 'modifier': function('ReverseCase'),
+   \ 'tokenizer': g:changecase_tokenizers.word_boundaries
+   \ }
+<
+Your modifier will now be listed in the status line when using the
+change-case operation and can be selected with "r".
+
+
+ vim:tw=78:ts=8:ft=help:norl:
