@@ -10,7 +10,7 @@
 "- \c for caseless search
 "- ma and ‘ a - bookmark
 "- “_d yank/delete to null register
-"- Tabular /-
+"- Tabularize /- or with suffix \zs
 "- :set binary || :set noeol
 "- :^r” to yank in mini win
 "- Ngt - goto tab
@@ -19,7 +19,8 @@
 "- set scrollbind! to lock window scrolling
 "- ^wT move window to new tab
 "- :CopyPath
-"
+"- cC change case (cCws to change word to snake)
+"- ,ct change test method
 "########################
 " How to debug:
 " :profile start profile.log
@@ -73,14 +74,16 @@ nnoremap <silent> ,o} :split<CR>:exec("tag ".expand("<cword>"))<CR>
 " Open file on left
 nnoremap <silent> ,o[ :vsplit<CR>:exec("tag ".expand("<cword>"))<CR>
 " Open file on right
-nnoremap <silent> ,o] :vsplit<CR>^wl:exec("tag ".expand("<cword>"))<CR>
+nnoremap <silent> ,o] :vsplit<CR><C-w>l:exec("tag ".expand("<cword>"))<CR>
 " open test file on left
 nnoremap <silent> ,ot :vsplit<CR>:exec("tag ".expand("<cword>")."Test")<CR>
 " Open next file in NerdTree below
 nnoremap <silent> ,on :split<CR><C-W>j:NERDTreeFind<CR>o<CR>
 
+" change case - cCws
+nnoremap <silent> ,ft     cCwsgUl
+
 "map <silent> ,tt <Esc>:TlistToggle<CR>
-map <silent> <C-w>t <Esc>:tabe<CR>
 nnoremap <silent> ,t     :tabe<CR>
 
 nnoremap <silent> ,< 20<C-W><
@@ -112,7 +115,7 @@ nnoremap <silent> ,fj :%!jq '.'<cr>:set ft=json<cr>
 nnoremap <silent> ,fh :%!xxd<cr>
 nnoremap <silent> ,fu 0cwusing<ESC>A;<ESC>0
 
-if exists(":Tabularize")
+"if exists(":Tabularize")
   "nmap <Leader>a= :Tabularize /=<CR>
   "vmap <Leader>a= :Tabularize /=<CR>
   "nmap <Leader>a: :Tabularize /:\zs<CR>
@@ -120,7 +123,7 @@ if exists(":Tabularize")
   vnoremap <silent> ,ft, Tabularize /,\zs<cr>
   vnoremap <silent> ,ft= Tabularize /=\zs<cr>
   vnoremap <silent> ,ft: Tabularize /:\zs<cr>
-endif
+"endif
 
 "map <silent> 'ctf <Esc>:%s/@Test/\/\/@Test/<CR>
 "map <silent> 'ctn <Esc>:%s/\/\/@Test/@Test/<CR>
@@ -159,16 +162,20 @@ let g:ctrlp_switch_buffer = 'et'
 let g:ctrlp_working_path_mode = 'ra'"
 
 " Ignore files in gitignore."
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+let g:ctrlp_user_command = ['.git', 'vim_ctrlp_files.sh %s']
 
 " GIT Gutter: https://github.com/airblade/vim-gitgutter
 let g:gitgutter_enabled=1
 
 nmap ghk <Plug>GitGutterPrevHunk
 nmap ghj <Plug>GitGutterNextHunk
+nmap ghu <Plug>GitGutterUndoHunk
+nmap ghs <Plug>GitGutterStageHunk
 nnoremap <silent> ,gb     :GitBlame<CR>
 
-"nnoremap <silent> ,p     :CtrlP<CR>
+" Vim Angular
+let g:angular_source_directory = 'app/src/CTKO.CombinedServer/devroot/Scripts'
+let g:angular_test_directory = 'app/src/CTKO.CombinedServer/devroot/Scripts-Tests'
 
 " Fuzzy Finder
 "
@@ -290,6 +297,14 @@ set incsearch   "find the next match as we type the search
 set hlsearch    "hilight searches by default
 
 set number      "add line numbers
+set relativenumber
+
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
+
 set showbreak=...
 set wrap linebreak nolist
 
@@ -373,6 +388,61 @@ set laststatus=2
 
 "turn off needless toolbar on gvim/mvim
 set guioptions-=T
+set guifont=Menlo-Regular:h13
+
+" Configure syntactic to use OmniShartp for synctax checking C#
+let g:syntastic_cs_checkers = ['code_checker']
+
+" OmniSharp interface through ^p
+let g:OmniSharp_selector_ui = 'ctrlp'
+
+let g:OmniSharp_popup_options = { 'highlight': 'Normal', 'padding': [1], 'border': [1] }
+let g:OmniSharp_highlighting = 0
+
+"inoremap <expr> <Tab> pumvisible() ? '<C-n>' :
+"\ getline('.')[col('.')-2] =~# '[[:alnum:].-_#$]' ? '<C-x><C-o>' : '<Tab>'
+
+augroup omnisharp_commands
+  autocmd!
+
+  " Show type information automatically when the cursor stops moving.
+  " Note that the type is echoed to the Vim command line, and will overwrite
+  " any other messages in this space including e.g. ALE linting messages.
+  autocmd CursorHold *.cs OmniSharpTypeLookup
+
+  " The following commands are contextual, based on the cursor position.
+  autocmd FileType cs nmap <silent> <buffer> gd <Plug>(omnisharp_go_to_definition)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>osfu <Plug>(omnisharp_find_usages)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>osfi <Plug>(omnisharp_find_implementations)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>ospd <Plug>(omnisharp_preview_definition)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>ospi <Plug>(omnisharp_preview_implementations)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>ost <Plug>(omnisharp_type_lookup)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>osd <Plug>(omnisharp_documentation)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>osfs <Plug>(omnisharp_find_symbol)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>osfx <Plug>(omnisharp_fix_usings)
+  autocmd FileType cs nmap <silent> <buffer> <C-\> <Plug>(omnisharp_signature_help)
+  autocmd FileType cs imap <silent> <buffer> <C-\> <Plug>(omnisharp_signature_help)
+
+  " Navigate up and down by method/property/field
+  autocmd FileType cs nmap <silent> <buffer> [[ <Plug>(omnisharp_navigate_up)
+  autocmd FileType cs nmap <silent> <buffer> ]] <Plug>(omnisharp_navigate_down)
+  " Find all code errors/warnings for the current solution and populate the quickfix window
+  autocmd FileType cs nmap <silent> <buffer> <Leader>osgcc <Plug>(omnisharp_global_code_check)
+  " Contextual code actions (uses fzf, CtrlP or unite.vim selector when available)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>osca <Plug>(omnisharp_code_actions)
+  autocmd FileType cs xmap <silent> <buffer> <Leader>osca <Plug>(omnisharp_code_actions)
+  " Repeat the last code action performed (does not use a selector)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>os. <Plug>(omnisharp_code_action_repeat)
+  autocmd FileType cs xmap <silent> <buffer> <Leader>os. <Plug>(omnisharp_code_action_repeat)
+
+  autocmd FileType cs nmap <silent> <buffer> <Leader>os= <Plug>(omnisharp_code_format)
+
+  autocmd FileType cs nmap <silent> <buffer> <Leader>osnm <Plug>(omnisharp_rename)
+
+  autocmd FileType cs nmap <silent> <buffer> <Leader>osre <Plug>(omnisharp_restart_server)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>osst <Plug>(omnisharp_start_server)
+  autocmd FileType cs nmap <silent> <buffer> <Leader>ossp <Plug>(omnisharp_stop_server)
+augroup END
 
 "recalculate the trailing whitespace warning when idle, and after saving
 "autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
@@ -671,3 +741,5 @@ function! DoPrettyXML()
   exe "set ft=" . l:origft
 endfunction
 command! PrettyXML call DoPrettyXML()
+
+"colorscheme darkblack

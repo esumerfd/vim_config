@@ -1,0 +1,89 @@
+Include: utils/startserver.vader
+Include: utils/async-helper.vader
+
+Given cs():
+  using System;
+  public class Test
+  {
+
+  }
+
+Execute (run fix usings):
+  call OmniSharpTestInitializeBuffer('FixUsings1')
+  call OmniSharpWarmup('OmniSharp#actions#usings#Fix', [])
+  call OmniSharpTestAwait('OmniSharp#actions#usings#Fix', [])
+
+Expect cs(should remove unused using):
+  public class Test
+  {
+
+  }
+
+
+Given cs():
+  public class Test
+  {
+    public Test()
+    {
+        Console.WriteLine("test");
+    }
+  }
+
+Execute (run fix usings):
+  call OmniSharpTestInitializeBuffer('FixUsings2')
+  call OmniSharpWarmup('OmniSharp#actions#usings#Fix', [])
+  call OmniSharpTestAwait('OmniSharp#actions#usings#Fix', [])
+
+Expect cs(should add required using):
+  using System;
+
+  public class Test
+  {
+    public Test()
+    {
+        Console.WriteLine("test");
+    }
+  }
+
+
+Given cs():
+  public class test {
+      class1 ns1 = new class1();
+  }
+
+  namespace ns1
+  {
+      public class class1{}
+  }
+
+  namespace ns2
+  {
+      public class class1{}
+  }
+
+Execute (run fix usings):
+  call OmniSharpTestInitializeBuffer('FixUsings3')
+  call OmniSharpWarmup('OmniSharp#actions#usings#Fix', [])
+  call OmniSharpTestAwait('OmniSharp#actions#usings#Fix', [])
+
+Expect cs(should not add ambiguous using):
+  public class test {
+      class1 ns1 = new class1();
+  }
+
+  namespace ns1
+  {
+      public class class1{}
+  }
+
+  namespace ns2
+  {
+      public class class1{}
+  }
+
+Execute (should add ambiguous usings to quickfix):
+  call OmniSharpTestInitializeBuffer('FixUsings4')
+  call OmniSharpWarmup('OmniSharp#actions#usings#Fix', [])
+  call OmniSharpTestAwait('OmniSharp#actions#usings#Fix', [])
+  cfirst
+  AssertEqual line('.'), 2
