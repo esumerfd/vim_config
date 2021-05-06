@@ -78,11 +78,15 @@ command! CopyPath let @+ = expand('%:p')
 call plug#begin('~/.vim/plugged')
 
 Plug 'AndrewRadev/sideways.vim'
+Plug 'preservim/nerdtree'
 
 call plug#end()
 
 " Plugin: Sideways
 nnoremap <silent> ,ah :SidewaysLeft<cr>
 nnoremap <silent> ,al :SidewaysRight<cr>
+
+" NERdTree
+nnoremap <silent> <C-f> :NERDTreeToggle<CR>
 
 
