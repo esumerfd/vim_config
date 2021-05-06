@@ -61,6 +61,15 @@ nnoremap <silent> ,t     :tabe<CR>
 nnoremap <silent> ,< 20<C-W><
 nnoremap <silent> ,> 20<C-W>>
 
+" Open Files
+nnoremap <silent> ,oo :exec("tag ".expand("<cword>"))<CR>
+nnoremap <silent> ,o\ :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+nnoremap <silent> ,o} :split<CR>:exec("tag ".expand("<cword>"))<CR>
+nnoremap <silent> ,o[ :vsplit<CR>:exec("tag ".expand("<cword>"))<CR>
+nnoremap <silent> ,o] :vsplit<CR><C-w>l:exec("tag ".expand("<cword>"))<CR>
+nnoremap <silent> ,ot :vsplit<CR>:exec("tag ".expand("<cword>")."Test")<CR>
+nnoremap <silent> ,on :split<CR><C-W>j:NERDTreeFind<CR>o<CR>
+
 " Syntax
 syntax on
 
@@ -79,6 +88,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'AndrewRadev/sideways.vim'
 Plug 'preservim/nerdtree'
+Plug 'kien/ctrlp.vim'
 
 call plug#end()
 
@@ -86,7 +96,7 @@ call plug#end()
 nnoremap <silent> ,ah :SidewaysLeft<cr>
 nnoremap <silent> ,al :SidewaysRight<cr>
 
-" NERdTree
+" Plugin: NERDTree
 let NERDTreeAutoDeleteBuffer = 1
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
