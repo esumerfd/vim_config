@@ -87,6 +87,9 @@ nnoremap <silent> ,ah :SidewaysLeft<cr>
 nnoremap <silent> ,al :SidewaysRight<cr>
 
 " NERdTree
-nnoremap <silent> <C-f> :NERDTreeToggle<CR>
+let NERDTreeAutoDeleteBuffer = 1
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
 
+nnoremap <silent> <C-f> :NERDTreeToggle<CR>
 
