@@ -89,6 +89,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'AndrewRadev/sideways.vim'
 Plug 'preservim/nerdtree'
 Plug 'kien/ctrlp.vim'
+Plug 'preservim/nerdcommenter'
 
 call plug#end()
 
@@ -102,4 +103,9 @@ let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 
 nnoremap <silent> <C-f> :NERDTreeToggle<CR>
+
+" Plugin: CtrlP
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_switch_buffer = 'et'
+let g:ctrlp_user_command = ['.git', 'vim_ctrlp_files.sh %s']
 

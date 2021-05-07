@@ -4,3 +4,9 @@
 [submodule "plugged/nerdtree"]
 	path = plugged/nerdtree
 	url = https://github.com/preservim/nerdtree.git
+[submodule "plugged/ctrlp.vim"]
+	path = plugged/ctrlp.vim
+	url = https://github.com/kien/ctrlp.vim.git
+[submodule "plugged/nerdcommenter"]
+	path = plugged/nerdcommenter
+	url = https://github.com/preservim/nerdcommenter.git
