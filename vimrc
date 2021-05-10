@@ -90,6 +90,7 @@ Plug 'AndrewRadev/sideways.vim'
 Plug 'preservim/nerdtree'
 Plug 'kien/ctrlp.vim'
 Plug 'preservim/nerdcommenter'
+Plug 'bogado/file-line'
 
 call plug#end()
 

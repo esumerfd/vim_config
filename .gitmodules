@@ -10,3 +10,6 @@
 [submodule "plugged/nerdcommenter"]
 	path = plugged/nerdcommenter
 	url = https://github.com/preservim/nerdcommenter.git
+[submodule "plugged/file-line"]
+	path = plugged/file-line
+	url = https://github.com/bogado/file-line.git
