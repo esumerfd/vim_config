@@ -13,3 +13,33 @@
 [submodule "plugged/file-line"]
 	path = plugged/file-line
 	url = https://github.com/bogado/file-line.git
+[submodule "plugged/vim-visual-multi"]
+	path = plugged/vim-visual-multi
+	url = https://github.com/mg979/vim-visual-multi.git
+[submodule "plugged/auto-pairs"]
+	path = plugged/auto-pairs
+	url = https://github.com/jiangmiao/auto-pairs.git
+[submodule "plugged/camelcasemotion"]
+	path = plugged/camelcasemotion
+	url = https://github.com/bkad/camelcasemotion.git
+[submodule "plugged/coc.nvim"]
+	path = plugged/coc.nvim
+	url = https://github.com/neoclide/coc.nvim.git
+[submodule "plugged/nerdtree-buffer-ops"]
+	path = plugged/nerdtree-buffer-ops
+	url = https://github.com/PhilRunninger/nerdtree-buffer-ops.git
+[submodule "plugged/nerdtree-visual-selection"]
+	path = plugged/nerdtree-visual-selection
+	url = https://github.com/PhilRunninger/nerdtree-visual-selection.git
+[submodule "plugged/tabular"]
+	path = plugged/tabular
+	url = https://github.com/godlygeek/tabular.git
+[submodule "plugged/vim-illuminate"]
+	path = plugged/vim-illuminate
+	url = https://github.com/RRethy/vim-illuminate.git
+[submodule "plugged/vim-jsonc"]
+	path = plugged/vim-jsonc
+	url = https://github.com/kevinoid/vim-jsonc.git
+[submodule "plugged/vim-surround"]
+	path = plugged/vim-surround
+	url = https://github.com/tpope/vim-surround.git
