@@ -1,3 +1,5 @@
 {
-  "suggest.autoTrigger": "none"
+  "suggest.autoTrigger": "none",
+  "coc.preferences.formatOnSaveFiletypes": ["css", "markdown"],
+  "snippets.userSnippetsDirectory": "~/.config/coc/snippets"
 }

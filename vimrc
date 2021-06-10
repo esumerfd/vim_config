@@ -1,6 +1,9 @@
 " """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Hints:
 " :verbose imap <tab>           What is tab key bound to.
+"
+" Keys I forget
+" ,rn - coc rename
 " """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader=','
 
@@ -101,12 +104,14 @@ endfunction
 vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR>
 vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>
 
+" Language specific configuration
+autocmd FileType cs setlocal shiftwidth=4 tabstop=4
+
 " vm-plug
 call plug#begin('~/.vim/plugged')
 
 Plug 'AndrewRadev/sideways.vim'
 Plug 'preservim/nerdtree'
-Plug 'kien/ctrlp.vim'
 Plug 'preservim/nerdcommenter'
 Plug 'bogado/file-line'
 Plug 'godlygeek/tabular'
@@ -119,6 +124,13 @@ Plug 'tpope/vim-surround'
 Plug 'bkad/camelcasemotion'
 Plug 'RRethy/vim-illuminate' " coc may do this
 Plug 'mg979/vim-visual-multi'
+Plug 'matze/vim-move'
+Plug 'sotte/presenting.vim'
+Plug 'fadein/vim-FIGlet'
+Plug 'chrisbra/csv.vim'
+Plug 'rosenfeld/rgrep.vim'
+Plug 'vim-scripts/YankRing.vim'
+Plug 'kien/ctrlp.vim'
 
 call plug#end()
 
@@ -152,9 +164,14 @@ let g:coc_global_extensions = [
     \ 'coc-css',
     \ 'coc-eslint',
     \ 'coc-html',
-    \ 'coc-markdownlint',
-    \ 'coc-omnisharp'
+    \ 'coc-omnisharp',
+    \ 'coc-prettier',
+    \ 'coc-vetur'
     \ ]
+
+let g:LanguageClient_serverCommands = {
+    \ 'vue': ['vls']
+    \ }
 
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
@@ -212,7 +229,7 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
 " Plugin: auto-pairs
-let g:AutoPairsFlyMode = 1
+let g:AutoPairsFlyMode = 0
 let g:AutoPairsShortcutBackInsert = '<M-b>'
 
 " Plugin: coc-snippets
@@ -233,4 +250,21 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 
 " Use <leader>x for convert visual selected code to snippet
 xmap <leader>x  <Plug>(coc-convert-snippet)
+
+" Plugin: vim-move
+let g:move_map_keys = 0
+" Bind alt-j and alt-k to move up and down
+nnoremap ∆ :move .+1<CR>==
+nnoremap ˚ :move .-2<CR>==
+inoremap ∆ <Esc>:move .+1<CR>==gi
+inoremap ˚ <Esc>:move .-2<CR>==gi
+vnoremap ∆ :move '>+1<CR>gv=gv
+vnoremap ˚ :move '<-2<CR>gv=gv
+
+" Plugin: presenting
+au FileType md let b:presenting_slide_separator = '\v(^|\n)\#{3,}'
+
+" Plugim: YankRing
+nnoremap <silent>π :<C-U>YRReplace '-1', P<CR>   " meta-p
+nnoremap <silent>˜ :<C-U>YRReplace '1', P<CR>    " meta-n
 
