@@ -34,9 +34,6 @@
 [submodule "plugin/vifm.vim"]
 	path = plugin/vifm.vim
 	url = https://github.com/vifm/vifm.vim
-[submodule "bundle/snippets"]
-	path = bundle/snippets
-	url = git://github.com/akitaonrails/snipmate-snippets.git
 [submodule "bundle/ack"]
 	path = bundle/ack
 	url = git://github.com/mileszs/ack.vim.git
