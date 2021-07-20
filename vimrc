@@ -131,6 +131,7 @@ Plug 'chrisbra/csv.vim'
 Plug 'rosenfeld/rgrep.vim'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'kien/ctrlp.vim'
+Plug 'mattn/emmet-vim'
 
 call plug#end()
 
@@ -266,5 +267,5 @@ au FileType md let b:presenting_slide_separator = '\v(^|\n)\#{3,}'
 
 " Plugim: YankRing
 nnoremap <silent>π :<C-U>YRReplace '-1', P<CR>   " meta-p
-nnoremap <silent>˜ :<C-U>YRReplace '1', P<CR>    " meta-n
+"nnoremap <silent>˜ :<C-U>YRReplace '1', P<CR>    " meta-n
 
