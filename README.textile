@@ -1,0 +1,8 @@
+h1. Vim
+
+Eds Vim configuration.
+
+> cd $HOME
+> git clone git@github.com:esumerfd/vim_config.git .vim
+> ln -sf ~/.vim/vimrc .vimrc
+
