@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =6
+let g:netrw_dirhist_6='/Users/esumerfd/edward/dev/stack/webapi/app/src/CTKO.CombinedServer/devroot'
+let g:netrw_dirhist_5='/Users/esumerfd/edward/dev/stack/webapi/app/src/CTKO.CombinedServer/devroot/Scripts-Tests/ctApp/Assy/directives'
+let g:netrw_dirhist_4='/Users/esumerfd/edward/dev/stack/webapi/app/src/CTKO.CombinedServer/devroot/Scripts-Tests/ctApp/Assy'
+let g:netrw_dirhist_3='/Users/esumerfd/edward/dev/stack/webapi/app/src/CTKO.CombinedServer/devroot/Scripts-Tests/ctApp'
+let g:netrw_dirhist_2='/Users/esumerfd/edward/dev/stack/webapi/app/src/CTKO.CombinedServer/devroot/Scripts-Tests'
+let g:netrw_dirhist_1='/Users/esumerfd/edward/dev/stack/webapi/app/src/CTKO.CombinedServer/devroot'
+let g:netrw_dirhist_0='/Users/esumerfd/edward/dev/stack/webapi/app/src/CTKO.CombinedServer/devroot/Scripts/ctApp/Assy/controllers'
+let g:netrw_dirhist_9='/Users/esumerfd/edward/dev/stack/webapi/app/src/CTKO.CombinedServer/devroot/Scripts/ctApp/Assy'
+let g:netrw_dirhist_8='/Users/esumerfd/edward/dev/stack/webapi/app/src/CTKO.CombinedServer/devroot/Scripts/ctApp'
+let g:netrw_dirhist_7='/Users/esumerfd/edward/dev/stack/webapi/app/src/CTKO.CombinedServer/devroot/Scripts'
